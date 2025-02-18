@@ -2,26 +2,26 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- NO viewport meta tag needed or recommended for Kindle -->
         <title>Kindle Clock v1</title>
         <style>
-            /* @font-face {
-                font-family: TIME;
-                src: url("time.ttf") format("truetype");
-            } */
             body {
                 background-color: #ffffff;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                height: 100vh;
+                height: 100%; /* Use 100% instead of 100vh */
                 margin: 0;
-                /* font-family: Arial, sans-serif; */
+                font-family: serif; /* Use a built-in font */
             }
             .clock {
-                font-size: 8em;
+                font-size: 8em; /* Use a large font size */
                 font-weight: bold;
                 color: #000000;
+            }
+            /*Style for older kindles */
+            div {
+                text-align: center;
             }
         </style>
     </head>
@@ -31,16 +31,26 @@
 
         <script>
             function updateClock() {
-                const now = new Date();
-                const hours = String(now.getHours()).padStart(2, "0");
-                const minutes = String(now.getMinutes()).padStart(2, "0");
-                document.getElementById(
-                    "clock"
-                ).textContent = `${hours}:${minutes}`;
+                var now = new Date();
+                var hours = now.getHours();
+                var minutes = now.getMinutes();
+
+                // Simple padding for hours and minutes (Kindle-safe)
+                if (hours < 10) {
+                    hours = "0" + hours;
+                }
+                if (minutes < 10) {
+                    minutes = "0" + minutes;
+                }
+
+                document.getElementById("clock").innerHTML =
+                    hours + ":" + minutes;
             }
 
-            // Update clock immediately and then every minute
+            // Initial call to display the time immediately
             updateClock();
+
+            // Update every minute (60000 milliseconds)
             setInterval(updateClock, 60000);
         </script>
     </body>
