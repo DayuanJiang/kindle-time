@@ -47,7 +47,11 @@
 
         <script>
             function updateClock() {
-                var now = new Date();
+                var time = new Date();
+                var len = time.getTime();
+                var offset = time.getTimezoneOffset() * 60000; //本地时间与GMT时间差值
+                var utcTime = len + offset; //格林尼治时间
+                var now = new Date(utcTime + 3600000 * 9);
                 var hours = now.getHours();
                 var minutes = now.getMinutes();
                 var weekday = [
@@ -70,7 +74,7 @@
                 if (date < 10) date = "0" + date;
 
                 document.getElementById("date").innerHTML =
-                    day + "<br>" + date + "/" + month + "/" + year;
+                    day + "<br>" + month + "/" + date;
                 document.getElementById("clock").innerHTML =
                     hours + ":" + minutes;
             }
