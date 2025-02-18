@@ -51,7 +51,7 @@
                 var len = time.getTime();
                 var offset = time.getTimezoneOffset() * 60000; //本地时间与GMT时间差值
                 var utcTime = len + offset; //格林尼治时间
-                var now = new Date(utcTime + 3600000 * 9);
+                var now = new Date(utcTime + 3600000 * 9 + 60000); //东九区时间快1分钟
                 var hours = now.getHours();
                 var minutes = now.getMinutes();
                 var weekday = [
