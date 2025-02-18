@@ -2,41 +2,47 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>Kindle Clock v1</title>
+        <title>Kindle Clock v1 (Rotated)</title>
         <style>
             body {
                 background-color: #ffffff;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100%;
                 margin: 0;
                 font-family: serif;
-
-                /* Rotate the entire body */
-                transform: rotate(90deg);
-
-                /*  Crucial: Adjust the origin of the rotation. */
-                transform-origin: center;
-
-                /* Handle positioning after rotation */
-                width: 100vh; /* Use viewport height for width after rotation */
-                height: 100vw; /* Use viewport width for height after rotation */
-                overflow: hidden; /* Prevent scrollbars */
+                height: 100%; /* Use 100% instead of 100vh */
+                /*  Crucial for rotation to work as expected */
+                overflow: hidden;
             }
+
+            /* Container for rotation */
+            #container {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                /*  These are needed for the rotation to center correctly */
+                -webkit-transform-origin: 0 0;
+                transform-origin: 0 0;
+                /*  Initial transform (will be updated by JavaScript) */
+                -webkit-transform: translate(-50%, -50%) rotate(90deg); /* 90 degrees for clockwise */
+                transform: translate(-50%, -50%) rotate(90deg);
+            }
+
             .clock {
                 font-size: 8em;
                 font-weight: bold;
                 color: #000000;
-                white-space: nowrap; /*Important to keep the time in one line */
+                text-align: center; /* Center the text within the clock div */
             }
+
+            /*Style for older kindles */
             div {
                 text-align: center;
             }
         </style>
     </head>
     <body>
-        <div class="clock" id="clock"></div>
+        <div id="container">
+            <div class="clock" id="clock"></div>
+        </div>
 
         <script>
             function updateClock() {
